@@ -1,4 +1,4 @@
-# Android中的安全距离
+# Android中的安全距离适配
 
 在Android屏幕的空间中，大部分的区域我们都是可以随意绘制，只有一部分区域是显示的固定内容：
 
@@ -118,6 +118,8 @@ if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
 除了圆角以外，好像没有找到官方对**打孔屏**的支持，可能后面会加入对打孔屏的支持吧。
 
 ## 相关链接
+
+[Demo](https://github.com/hushenghao/SafeSpace)
 
 [官方文档：支持刘海屏](https://developer.android.google.cn/guide/topics/display-cutout)
 
