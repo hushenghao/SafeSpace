@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    tools:ignore="HardcodedText">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="16dp">
+
+        <CheckBox
+            android:id="@+id/cb_full_screen"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN" />
+
+        <CheckBox
+            android:id="@+id/cb_hide_navigation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION" />
+
+        <CheckBox
+            android:id="@+id/cb_transparent_status_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="transparentStatusBar" />
+
+        <CheckBox
+            android:id="@+id/cb_transparent_navigation_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="transparentNavigationBar" />
+
+        <CheckBox
+            android:id="@+id/cb_fits_system_windows"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="fitsSystemWindows" />
+
+        <include
+            android:id="@+id/layout_cutout_mode"
+            layout="@layout/layout_display_cutout_mode" />
+
+        <Button
+            android:id="@+id/bt_start_act"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Start" />
+    </LinearLayout>
+
+</ScrollView>
+
+

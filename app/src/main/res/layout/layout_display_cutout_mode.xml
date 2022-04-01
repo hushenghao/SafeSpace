@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rg_cutout_mode"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="6dp"
+    tools:ignore="HardcodedText"
+    tools:showIn="@layout/activity_main">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="windowLayoutInDisplayCutoutMode:"
+        android:textAppearance="?attr/textAppearanceBody1"
+        android:textStyle="bold" />
+
+    <RadioButton
+        android:id="@+id/rb_default"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:checked="true"
+        android:text="default" />
+
+    <RadioButton
+        android:id="@+id/rb_never"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="never" />
+
+    <RadioButton
+        android:id="@+id/rb_short_edges"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="shortEdges" />
+
+    <RadioButton
+        android:id="@+id/rb_always"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="always" />
+</RadioGroup>
