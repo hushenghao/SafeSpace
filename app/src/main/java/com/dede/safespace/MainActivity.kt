@@ -55,8 +55,10 @@ class MainActivity : AppCompatActivity() {
             mode = mode
         )
 
-        startActivity(Intent(this, SafeSpaceActivity::class.java)
-            .putExtra(SafeSpaceActivity.EXTRA_CONFIG, config))
+        startActivity(
+            Intent(this, SafeSpaceActivity::class.java)
+                .putExtra(SafeSpaceActivity.EXTRA_CONFIG, config)
+        )
     }
 
 }
