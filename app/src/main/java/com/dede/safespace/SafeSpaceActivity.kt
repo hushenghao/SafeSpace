@@ -5,14 +5,11 @@ import android.content.pm.ActivityInfo
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
-import android.view.RoundedCorner
 import android.view.View
 import android.view.View.*
 import android.view.ViewGroup
 import android.view.WindowManager.LayoutParams.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.*
 import com.dede.safespace.databinding.ActivitySafeSpaceBinding
 import java.io.Serializable
@@ -78,7 +75,9 @@ class SafeSpaceActivity : AppCompatActivity() {
             }
 
             if (config.mode != -1 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                window.attributes.layoutInDisplayCutoutMode = config.mode
+                window.attributes = window.attributes.apply {
+                    layoutInDisplayCutoutMode = config.mode
+                }
             }
         }
 
@@ -95,7 +94,8 @@ class SafeSpaceActivity : AppCompatActivity() {
                 ViewCompat.setOnApplyWindowInsetsListener(binding.root) { view: View, insets: WindowInsetsCompat ->
                     val stableInsets = insets.getInsets(
                         WindowInsetsCompat.Type.systemBars() or
-                                WindowInsetsCompat.Type.displayCutout())
+                                WindowInsetsCompat.Type.displayCutout()
+                    )
                     @SuppressLint("SetTextI18n")
                     binding.tvText.text = "$stableInsets\n$config"
                     binding.btRotate.updateLayoutParams<ViewGroup.MarginLayoutParams> {
@@ -105,21 +105,11 @@ class SafeSpaceActivity : AppCompatActivity() {
                     }
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                         val windowInsets = insets.toWindowInsets()
-                        val privacyIndicatorBounds = windowInsets?.privacyIndicatorBounds
-                        // 隐私指示器的范围，主要是摄像头和麦克风指示器的边界，如果是录制直播或者相机的页面需要处理这个区域
-                        if (privacyIndicatorBounds != null) {
-                            binding.vRed.updateLayoutParams<ConstraintLayout.LayoutParams> {
-                                leftMargin = privacyIndicatorBounds.left
-                                topMargin = privacyIndicatorBounds.top
-                                width = privacyIndicatorBounds.width()
-                                height = privacyIndicatorBounds.height()
-                            }
-                        }
-                        // 屏幕圆角信息
-                        val roundedCorner = windowInsets
-                            ?.getRoundedCorner(RoundedCorner.POSITION_TOP_LEFT)
-                        Log.i("TAG", "onCreate: " + roundedCorner?.radius)
-                        Log.i("TAG", "onCreate: " + roundedCorner?.center)
+                        binding.ivCorner.setImageDrawable(SCornerDrawable().apply {
+                            val never = window.attributes.layoutInDisplayCutoutMode !=
+                                    LAYOUT_IN_DISPLAY_CUTOUT_MODE_NEVER
+                            setWindowInsets(never, windowInsets)
+                        })
                     }
                     binding.layoutCutoutMode.rgCutoutMode.updatePadding(
                         left = stableInsets.left,
@@ -130,17 +120,20 @@ class SafeSpaceActivity : AppCompatActivity() {
                 }
             }
             binding.tvText.text = config.toString()
-
             binding.layoutCutoutMode.rgCutoutMode.isVisible =
                 Build.VERSION.SDK_INT >= Build.VERSION_CODES.P
+            binding.layoutCutoutMode.rbAlways.isVisible =
+                Build.VERSION.SDK_INT >= Build.VERSION_CODES.R
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                binding.layoutCutoutMode.rgCutoutMode.check(when (config.mode) {
-                    LAYOUT_IN_DISPLAY_CUTOUT_MODE_DEFAULT -> R.id.rb_default
-                    LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS -> R.id.rb_always
-                    LAYOUT_IN_DISPLAY_CUTOUT_MODE_NEVER -> R.id.rb_never
-                    LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES -> R.id.rb_short_edges
-                    else -> R.id.rb_default
-                })
+                binding.layoutCutoutMode.rgCutoutMode.check(
+                    when (config.mode) {
+                        LAYOUT_IN_DISPLAY_CUTOUT_MODE_DEFAULT -> R.id.rb_default
+                        LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS -> R.id.rb_always
+                        LAYOUT_IN_DISPLAY_CUTOUT_MODE_NEVER -> R.id.rb_never
+                        LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES -> R.id.rb_short_edges
+                        else -> R.id.rb_default
+                    }
+                )
                 binding.layoutCutoutMode.rgCutoutMode.setOnCheckedChangeListener { _, checkedId ->
                     var mode = -1
                     when (checkedId) {

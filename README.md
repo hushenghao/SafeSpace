@@ -104,7 +104,6 @@ if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
     roundedCorner?.center
 }
 ```
-但是我用了Pixel4真机发现并不能获取到数据😂，包括模拟器也一样。
 
 除了圆角支持，还有对**隐私指示器**提供了支持：
 ```kotlin
